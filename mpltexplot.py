@@ -15,18 +15,21 @@ name=sys.argv[1]
 strain,px,py,pz=np.genfromtxt(name,delimiter=' ',unpack=True,skip_header=1)
 
 
-@mpltex.acs_decorator
+@mpltex.aps_decorator
 def my_plot(name):
     fig, ax = plt.subplots(1)
-    linestyles = mpltex.linestyle_generator(lines=[])
+    linestyles = mpltex.linestyle_generator(markers=[])
     #ax.plot(t, t, label='$t$', **next(linestyles))
-    ax.plot(strain, pz, **next(linestyles),label="Pz")
-    ax.plot(strain, py, **next(linestyles),label="Py")
-    ax.plot(strain, px, **next(linestyles),label="Px")
+    ax.xaxis.set_major_locator(matplotlib.ticker.MultipleLocator(0.05))
+    ax.plot(strain, pz,linewidth=1, **next(linestyles),label="Pz")
+    ax.plot(strain, py,linewidth=1, **next(linestyles),label="Py")
+    ax.plot(strain, px,linewidth=1, **next(linestyles),label="Px")
+
 
     ax.set_xlabel('Strain')
     ax.set_ylabel('Stress')
     ax.legend(loc='best', ncol=2)
+    plt.grid()
     fig.tight_layout(pad=0.1)
     fig.savefig("plot"+name[:-4])
 
